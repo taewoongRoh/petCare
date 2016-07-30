@@ -6,7 +6,7 @@
 <mapper namespace="com.petcare.disease.DiseaseMapper">
 
 	<select id="diseaseDetail" resultType="com.petcare.disease.DiseaseDTO">
-		SELECT * FROM disease where d_symptom=#{d_symptom} ;
+		SELECT * FROM disease where d_symptom=#{d_symptom};
 	</select>
 
 </mapper>
