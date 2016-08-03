@@ -1,5 +1,7 @@
 package com.petcare.disease;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +18,9 @@ public class DiseaseController {
 	
 	
 	@RequestMapping(path = "/disease/{symptom}", method = RequestMethod.GET)
-	public DiseaseDTO showDetail(@PathVariable(value = "symptom")String d_symptom) {
-		System.out.println("ssssssssssss >>>>>>>>>>. "+d_symptom);
+	public DiseaseDTO showDetail(@PathVariable(value = "symptom")String d_symptom,HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		DiseaseDTO detailList=diseaseMapper.diseaseDetail(d_symptom);
-		
 		return detailList;
 	}
 
