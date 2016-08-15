@@ -9,6 +9,15 @@ public class DiseaseDTO {
 	String d_cure;
 	String h_effect;
 	String category;
+	int count;
+	
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getD_id() {
 		return d_id;
 	}

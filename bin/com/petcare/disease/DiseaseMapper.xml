@@ -7,21 +7,16 @@
 
 	<select id="diseaseDetail" resultType="com.petcare.disease.DiseaseDTO">
 		SELECT * FROM disease
-		where d_symptom=#{d_symptom};
+		where d_id=#{id};
 	</select>
 
-<select id="diseaseList" resultType="com.petcare.disease.DiseaseDTO" parameterType="HashMap">
-		SELECT * FROM (select * from disease where category LIKE CONCAT('%', #{category},'%'))tmp
+<select id="diseaseList" resultType="com.petcare.disease.DiseaseDTO">
+		SELECT d_id, d_name, d_symptom FROM disease
 		WHERE 
-		<foreach collection="list" item="type" separator="or">
-			d_symptom LIKE CONCAT('%',#{type},'%')
-		</foreach>
+		category LIKE CONCAT('%', #{category},'%')
 </select>
 
-<select id="disease" resultType="com.petcare.disease.DiseaseDTO">
-		SELECT * FROM disease
-		where d_id=#{id};
-</select>
+
 
 	
 </mapper>

@@ -1,6 +1,12 @@
 package com.petcare.disease;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,42 +26,52 @@ public class DiseaseController {
 	DiseaseMapper diseaseMapper;
 	
 	
-	@RequestMapping(path = "/disease/{symptom}", method = RequestMethod.GET)
-	public DiseaseDTO showDetail(@PathVariable(value = "symptom")String d_symptom,HttpServletResponse response) {
+	@RequestMapping(path = "/disease/{d_id}", method = RequestMethod.GET)
+	public DiseaseDTO showDetail(@PathVariable(value = "d_id")int id) {
 
-		DiseaseDTO detailList=diseaseMapper.diseaseDetail(d_symptom);
-		return detailList;
+		DiseaseDTO diseaseDetail=diseaseMapper.diseaseDetail(id);
+		return diseaseDetail;
 	}
 	
 	@RequestMapping(path = "/disease", method = RequestMethod.GET)
-	public DiseaseDTO[] diseaseList(@RequestParam(value="list[]") String[] list, @RequestParam(value="category") String category) {
-		for(String temp : list) {
-			System.out.print(temp + ",");
+	public List diseaseList(@RequestParam(value="list[]") String[] list, @RequestParam(value="category") String category) {
+
+		DiseaseDTO[] dtoList = diseaseMapper.diseaseList(category);		
+		
+		List<DiseaseDTO> diseaseList = new ArrayList();
+		
+		Boolean flag = false;
+		
+		for(DiseaseDTO dto : dtoList) {
+			flag= false;
+			for(String symptom : list) {
+				if(dto.getD_symptom().matches(".*"+symptom+".*")) {
+						dto.setCount(dto.getCount()+1);
+						flag=true;
+				}	
+			}
+			if(flag){
+				diseaseList.add(dto);
+			}
 		}
-		System.out.println();
-		System.out.println(category);
-		System.out.println("-----------------------------");
 		
-		HashMap<String, Object> map =new HashMap();
-		
-		map.put("list", list);
-		map.put("category", category);
-		DiseaseDTO[] show = diseaseMapper.diseaseList(map);
-		
-		
-		return show;
+		Collections.sort(diseaseList, new CountDescCompare());
+
+		return diseaseList;
 	}
 	
-	@RequestMapping(path = "/disease123", method = RequestMethod.GET)
-	public DiseaseDTO disease(@RequestParam(value="list[]") String list[]) {
-		
-		System.out.println("111");
-		DiseaseDTO show = diseaseMapper.disease(1);
-		
-		System.out.println(show);
-		System.out.println(list[0]);
-
-		return show;
+	
+	public static class CountDescCompare implements Comparator<DiseaseDTO> { // Count로 내림차순 정렬
+		 
+		/**
+		 * 내림차순(DESC)
+		 */
+		public int compare(DiseaseDTO arg0, DiseaseDTO arg1) {
+			// TODO Auto-generated method stub
+			return arg0.getCount() > arg1.getCount() ? -1 : arg0.getCount() < arg1.getCount() ? 1:0;
+		}
+ 
 	}
+ 
 	
 }

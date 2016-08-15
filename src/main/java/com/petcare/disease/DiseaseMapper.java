@@ -7,9 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DiseaseMapper {
 
-	DiseaseDTO diseaseDetail(String d_symptom);
+	DiseaseDTO diseaseDetail(int id);
 	
-	DiseaseDTO[] diseaseList(HashMap list);
-	
-	DiseaseDTO disease(int id);
+	DiseaseDTO[] diseaseList(String category);
+
 }
