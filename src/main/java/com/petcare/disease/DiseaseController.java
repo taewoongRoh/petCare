@@ -31,8 +31,11 @@ public class DiseaseController {
 
 		DiseaseDTO diseaseDetail=diseaseMapper.diseaseDetail(id);
 		return diseaseDetail;
+
+
 	}
 	
+
 	@RequestMapping(path = "/disease", method = RequestMethod.GET)
 	public List diseaseList(@RequestParam(value="list[]") String[] list, @RequestParam(value="category") String category) {
 
@@ -60,6 +63,7 @@ public class DiseaseController {
 		return diseaseList;
 	}
 	
+
 	
 	
 	public static class CountDescCompare implements Comparator<DiseaseDTO> { // Count로 내림차순 정렬
@@ -72,7 +76,6 @@ public class DiseaseController {
 			return arg0.getCount() > arg1.getCount() ? -1 : arg0.getCount() < arg1.getCount() ? 1:0;
 		}
  
-	}
  
 	
 }
