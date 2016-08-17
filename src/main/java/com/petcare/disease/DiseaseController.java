@@ -21,7 +21,10 @@ public class DiseaseController {
 	public DiseaseDTO showDetail(@PathVariable(value = "symptom")String d_symptom,HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		DiseaseDTO detailList=diseaseMapper.diseaseDetail(d_symptom);
+		System.out.println("--------------");
 		return detailList;
 	}
+	
+	
 
 }
