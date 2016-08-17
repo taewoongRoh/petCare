@@ -61,6 +61,7 @@ public class DiseaseController {
 	}
 	
 	
+	
 	public static class CountDescCompare implements Comparator<DiseaseDTO> { // Count로 내림차순 정렬
 		 
 		/**
